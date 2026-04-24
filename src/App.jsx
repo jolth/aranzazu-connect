@@ -31,7 +31,9 @@ const INITIAL_INCIDENTS = [
 ];
 
 export default function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('aranzazu_theme') || 'light';
+  });
   const [activeTab, setActiveTab] = useState('map'); // 'map', 'new', 'history', 'connections'
   const [incidents, setIncidents] = useState(() => {
     const saved = localStorage.getItem('aranzazu_incidents');
@@ -51,9 +53,10 @@ export default function App() {
     localStorage.setItem('aranzazu_incidents', JSON.stringify(incidents));
   }, [incidents]);
 
-  // Apply theme to document
+  // Apply theme to document and persist
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('aranzazu_theme', theme);
   }, [theme]);
 
   // Handle window resize to reset mobile tabs
