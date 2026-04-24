@@ -11,6 +11,11 @@
   background-color: var(--color-bg-primary);
 }
 
+/* Dark mode for OSM map tiles */
+[data-theme='dark'] .map-tiles {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
 /* Customizing leaflet controls for dark mode compatibility */
 [data-theme='dark'] .leaflet-control-zoom a,
 [data-theme='dark'] .leaflet-control-layers {

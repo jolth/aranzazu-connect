@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-leaflet';
+import { useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, LayersControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { AlertTriangle, MapPin, XCircle, AlertCircle, Mountain } from 'lucide-react';
@@ -35,6 +36,22 @@ const getIconSvg = (type) => {
   });
 };
 
+function MapUpdater({ incidents }) {
+  const map = useMap();
+  const prevCount = useRef(incidents.length);
+
+  useEffect(() => {
+    // Si la cantidad de incidencias aumenta, volamos a la última (la más reciente)
+    if (incidents.length > prevCount.current) {
+      const latestIncident = incidents[incidents.length - 1];
+      map.flyTo([latestIncident.lat, latestIncident.lng], 16, { animate: true, duration: 1.5 });
+    }
+    prevCount.current = incidents.length;
+  }, [incidents, map]);
+
+  return null;
+}
+
 export default function Map({ incidents }) {
   return (
     <div className="map-container">
@@ -45,9 +62,11 @@ export default function Map({ incidents }) {
         className="leaflet-container"
         zoomControl={false}
       >
+        <MapUpdater incidents={incidents} />
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Calles (OSM)">
             <TileLayer
+              className="map-tiles"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
