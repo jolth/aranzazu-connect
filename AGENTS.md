@@ -28,7 +28,12 @@ Dashboard web interactivo diseñado para el monitoreo y reporte de incidencias v
    - La librería principal es `react-leaflet`.
    - El mapa se debe mantener centrado por defecto en Aranzazu, Caldas (Coordenadas aproximadas: `[5.2818, -75.4839]`).
    - El formulario de "Nueva incidencia" utiliza la **API gratuita de Nominatim (OpenStreetMap)** para convertir texto (ubicación) a coordenadas. A todas las búsquedas se les anexa de forma silenciosa el string `, Aranzazu, Caldas, Colombia` para afinar los resultados.
+   - Las capas base disponibles en el mapa son "Calles (OSM)" y "Satélite (Esri)". No se utilizan capas de pago o de tráfico externas.
+   - Los íconos de los marcadores en el mapa utilizan los SVG de `lucide-react` (ej. `Mountain` para derrumbes).
 
 4. **Componentes y UI:**
    - Las tarjetas (Cards) tienen su propio archivo CSS (`_card.css`) y deben encapsularse.
    - Las alertas y errores deben usar los colores semánticos (`--color-danger`, `--color-success`, `--color-warning`) definidos en `main.css`.
+
+5. **Persistencia de Datos:**
+   - Se utiliza `localStorage` en combinación con `useState` (`App.jsx`) para guardar y mantener las incidencias creadas por el usuario entre recargas de la página (`aranzazu_incidents`).

@@ -50,8 +50,8 @@ export default function NewIncidentCard({ onAddIncident }) {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label" htmlFor="incident-type">Tipo de Incidencia</label>
-          <select 
-            id="incident-type" 
+          <select
+            id="incident-type"
             className="form-select"
             value={type}
             onChange={(e) => setType(e.target.value)}
@@ -62,13 +62,13 @@ export default function NewIncidentCard({ onAddIncident }) {
             <option value="hueco profundo">Hueco Profundo</option>
           </select>
         </div>
-        
+
         <div className="form-group">
-          <label className="form-label" htmlFor="incident-location">Ubicación (Ej: Calle 5 con Carrera 4)</label>
-          <input 
-            type="text" 
-            id="incident-location" 
-            className="form-input" 
+          <label className="form-label" htmlFor="incident-location">Ubicación (Ej: Cra. 5 #504 / Cl. 5 #18-24)</label>
+          <input
+            type="text"
+            id="incident-location"
+            className="form-input"
             placeholder="Dirección o lugar específico"
             value={locationText}
             onChange={(e) => setLocationText(e.target.value)}

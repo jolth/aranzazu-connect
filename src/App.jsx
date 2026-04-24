@@ -7,9 +7,9 @@ const INITIAL_INCIDENTS = [
   {
     id: '1',
     type: 'accidente',
-    location: 'Calle 5 Carrera 4, Aranzazu',
-    lat: 5.2818,
-    lng: -75.4839,
+    location: 'Vía Aranzazu - Salamina',
+    lat: 5.288703,
+    lng: -75.488621,
     timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString() // 30 min ago
   },
   {
@@ -24,8 +24,8 @@ const INITIAL_INCIDENTS = [
     id: '3',
     type: 'vía cerrada',
     location: 'Parque Principal Aranzazu',
-    lat: 5.2835,
-    lng: -75.4820,
+    lat: 5.283298,
+    lng: -75.485217,
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString() // 1 day ago
   }
 ];
@@ -33,7 +33,23 @@ const INITIAL_INCIDENTS = [
 export default function App() {
   const [theme, setTheme] = useState('light');
   const [activeTab, setActiveTab] = useState('map'); // 'map', 'new', 'history', 'connections'
-  const [incidents, setIncidents] = useState(INITIAL_INCIDENTS);
+  const [incidents, setIncidents] = useState(() => {
+    const saved = localStorage.getItem('aranzazu_incidents');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Error parsing incidents from localStorage:', e);
+        return INITIAL_INCIDENTS;
+      }
+    }
+    return INITIAL_INCIDENTS;
+  });
+
+  // Persist incidents to localStorage
+  useEffect(() => {
+    localStorage.setItem('aranzazu_incidents', JSON.stringify(incidents));
+  }, [incidents]);
 
   // Apply theme to document
   useEffect(() => {
@@ -64,9 +80,9 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <Sidebar 
-        theme={theme} 
-        toggleTheme={toggleTheme} 
+      <Sidebar
+        theme={theme}
+        toggleTheme={toggleTheme}
         activeTab={activeTab}
         onAddIncident={handleAddIncident}
         activeIncidentsCount={incidents.length}

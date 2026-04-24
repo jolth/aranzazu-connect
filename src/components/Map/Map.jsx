@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { AlertTriangle, MapPin, XCircle, AlertCircle } from 'lucide-react';
+import { AlertTriangle, MapPin, XCircle, AlertCircle, Mountain } from 'lucide-react';
 
 const ARANZAZU_COORDS = [5.2818, -75.4839];
 
@@ -14,7 +14,7 @@ const getIconSvg = (type) => {
       iconElement = <AlertTriangle size={32} color="#ef4444" />;
       break;
     case 'derrumbe':
-      iconElement = <MapPin size={32} color="#f59e0b" />;
+      iconElement = <Mountain size={32} color="#f59e0b" />;
       break;
     case 'vía cerrada':
       iconElement = <XCircle size={32} color="#000000" />;
